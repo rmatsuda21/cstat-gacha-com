@@ -4,9 +4,6 @@ export default function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  response.status(200).json({
-    body: request.body,
-    query: request.query,
-    cookies: request.cookies,
-  });
+  const { name = "World" } = request.query;
+  response.send(`Hello ${name}!`);
 }
