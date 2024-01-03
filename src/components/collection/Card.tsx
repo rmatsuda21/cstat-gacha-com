@@ -11,6 +11,7 @@ const Card = ({
 }) => {
   return (
     <div className={styles.card}>
+      {card && <></>}
       {!isPlaceholder && <div className={styles.count}>12</div>}
       {isPlaceholder ? (
         <div className={styles.activity}></div>
