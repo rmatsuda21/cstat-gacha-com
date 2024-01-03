@@ -1,0 +1,58 @@
+.card {
+  position: relative;
+  background-color: #3a3a3a;
+  width: 100%;
+  height: 100%;
+
+  img {
+    width: 100%;
+  }
+}
+
+.count {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 -10px -10px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+
+  background-color: var(--accent);
+  border-radius: 50%;
+
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.activity {
+  width: 100%;
+
+  aspect-ratio: 155 / 228.77;
+
+  z-index: 10;
+
+  background-color: inherit;
+
+  filter: brightness(1);
+  -webkit-filter: brightness(1);
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    filter: brightness(1);
+    -webkit-filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+    -webkit-filter: brightness(1.2);
+  }
+  100% {
+    filter: brightness(1);
+    -webkit-filter: brightness(1);
+  }
+}
