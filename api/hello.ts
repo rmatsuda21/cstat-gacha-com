@@ -14,6 +14,8 @@ export default async function handler(
     },
   });
 
+  console.log(process.env.MYSQL_HOST);
+
   await db.connect();
   const results = await db.query("SELECT * FROM cards");
 
