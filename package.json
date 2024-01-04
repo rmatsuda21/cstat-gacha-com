@@ -13,11 +13,11 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "mysql2": "^3.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
-    "reset-css": "^5.0.2",
-    "serverless-mysql": "^1.5.5"
+    "reset-css": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
