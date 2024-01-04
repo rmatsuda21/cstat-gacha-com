@@ -5,7 +5,7 @@ export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  const db = mysql.createConnection({
+  const db = await mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     database: process.env.MYSQL_DATABASE,
@@ -14,8 +14,8 @@ export default async function handler(
 
   console.log(process.env.MYSQL_HOST);
 
-  (await db).connect();
-  const results = await (await db).query("SELECT * FROM cards");
+  const results = await db.query("SELECT * FROM cards");
+  db.end();
 
   const { name = "World" } = request.query;
   response.status(200).json({ test: `Hello ${name}!`, results });
