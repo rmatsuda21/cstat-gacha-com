@@ -13,6 +13,7 @@ export default async function handler(
       password: process.env.MYSQL_PASSWORD,
     },
   });
+
   await db.connect();
   const results = await db.query("SELECT * FROM cards");
 
