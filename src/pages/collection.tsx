@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import CardTable from "@/components/collection/CardTable";
 import { ICard } from "@/types/Card";
 
-const Collection = () => {
+const CollectionPage = () => {
   const [cards, setCards] = useState<ICard[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [rowNum, setRowNum] = useState(
@@ -175,4 +175,4 @@ const Collection = () => {
   );
 };
 
-export default Collection;
+export default CollectionPage;

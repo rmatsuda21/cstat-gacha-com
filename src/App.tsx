@@ -4,10 +4,12 @@ import ErrorPage from "./pages/error";
 import Home from "./pages/home";
 
 import "./App.scss";
-import Collection from "./pages/collection";
+import CollectionPage from "./pages/collection";
 import CardPage from "./pages/card";
 import UserPage from "./pages/user";
 import Layout from "./components/home/mobile/Layout";
+import CardexPage from "./pages/cardex";
+import OffersPage from "./pages/offers";
 
 const router = createBrowserRouter([
   {
@@ -26,19 +28,19 @@ const router = createBrowserRouter([
         path: "collection",
         loader: () => ({ message: "Hello Data Router!" }),
         errorElement: <ErrorPage />,
-        element: <Collection />,
+        element: <CollectionPage />,
       },
       {
         path: "cardex",
         loader: () => ({ message: "Hello Data Router!" }),
         errorElement: <ErrorPage />,
-        element: <Home />,
+        element: <CardexPage />,
       },
       {
         path: "offers",
         loader: () => ({ message: "Hello Data Router!" }),
         errorElement: <ErrorPage />,
-        element: <Home />,
+        element: <OffersPage />,
       },
       {
         path: "card/:tag",
