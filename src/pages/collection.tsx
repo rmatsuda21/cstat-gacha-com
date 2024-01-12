@@ -11,25 +11,52 @@ import {
   faStar,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CardTable from "@/components/collection/CardTable";
+import { ICard } from "@/types/Card";
 
 const Collection = () => {
+  const [cards, setCards] = useState<ICard[]>([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [rowNum, setRowNum] = useState(2);
-  const [sort, setSort] = useState("id-asc"); // ["id-asc", "id-desc", "rarity-asc", "rarity-desc", "count-asc", "count-desc"
+  const [rowNum, setRowNum] = useState(
+    Number(window?.sessionStorage.getItem("row")) || 2
+  );
+  const [sort, setSort] = useState(
+    window?.sessionStorage.getItem("sort") || "id-asc"
+  ); // ["id-asc", "id-desc", "rarity-asc", "rarity-desc", "count-asc", "count-desc"
+
+  useEffect(() => {
+    const fetchTest = async () => {
+      setIsFetching(true);
+      const res = await fetch(
+        `/api/collection?id=275111230446764032&sort=${sort}`
+      );
+      const data = await res.json();
+
+      const _cards = data?.res as ICard[];
+
+      setCards(_cards);
+      setIsFetching(false);
+    };
+
+    fetchTest();
+  }, [sort]);
 
   const handleSortChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSort(e.currentTarget.id);
-    setIsFetching(true);
+    window?.sessionStorage.setItem("sort", e.currentTarget.id);
   };
 
   const handleRowChange = (e: React.FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.id === "singleRow") {
       setRowNum(1);
+      window?.sessionStorage.setItem("row", "1");
     } else if (e.currentTarget.id === "multiRow") {
       setRowNum(2);
+      window?.sessionStorage.setItem("row", "2");
     } else {
       setRowNum(-1);
+      window?.sessionStorage.setItem("row", "-1");
     }
   };
 
@@ -140,13 +167,9 @@ const Collection = () => {
         </div>
       </div>
       {rowNum > 0 ? (
-        <CardGrid
-          isFetching={isFetching}
-          cards={Array(10).fill(0)}
-          rowNum={rowNum}
-        />
+        <CardGrid isFetching={isFetching} cards={cards} rowNum={rowNum} />
       ) : (
-        <>TBD</>
+        <CardTable isFetching={isFetching} cards={cards} />
       )}
     </div>
   );

@@ -1,0 +1,34 @@
+.wrapper {
+  display: block;
+  table-layout: auto;
+
+  width: 100%;
+  overflow-y: scroll;
+
+  th {
+    font-weight: 500;
+    padding: 0.5rem 0.5rem;
+    color: #bbb;
+  }
+
+  tr:not(:first-child) {
+    height: 1.25rem;
+  }
+
+  td {
+    text-align: center;
+    padding: 0.35rem 0rem;
+  }
+
+  td:nth-child(2) {
+    width: 100%;
+    max-width: 5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.first {
+  font-weight: 600;
+  color: var(--accent);
+}

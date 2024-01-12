@@ -5,6 +5,9 @@ import Home from "./pages/home";
 
 import "./App.scss";
 import Collection from "./pages/collection";
+import CardPage from "./pages/card";
+import UserPage from "./pages/user";
+import Layout from "./components/home/mobile/Layout";
 
 const router = createBrowserRouter([
   {
@@ -14,22 +17,42 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/collection",
+    path: "/",
     loader: () => ({ message: "Hello Data Router!" }),
     errorElement: <ErrorPage />,
-    element: <Collection />,
-  },
-  {
-    path: "/cardex",
-    loader: () => ({ message: "Hello Data Router!" }),
-    errorElement: <ErrorPage />,
-    element: <Home />,
-  },
-  {
-    path: "/offers",
-    loader: () => ({ message: "Hello Data Router!" }),
-    errorElement: <ErrorPage />,
-    element: <Home />,
+    element: <Layout />,
+    children: [
+      {
+        path: "collection",
+        loader: () => ({ message: "Hello Data Router!" }),
+        errorElement: <ErrorPage />,
+        element: <Collection />,
+      },
+      {
+        path: "cardex",
+        loader: () => ({ message: "Hello Data Router!" }),
+        errorElement: <ErrorPage />,
+        element: <Home />,
+      },
+      {
+        path: "offers",
+        loader: () => ({ message: "Hello Data Router!" }),
+        errorElement: <ErrorPage />,
+        element: <Home />,
+      },
+      {
+        path: "card/:tag",
+        loader: () => ({ message: "Hello Data Router!" }),
+        errorElement: <ErrorPage />,
+        element: <CardPage />,
+      },
+      {
+        path: "user/:id",
+        loader: () => ({ message: "Hello Data Router!" }),
+        errorElement: <ErrorPage />,
+        element: <UserPage />,
+      },
+    ],
   },
 ]);
 

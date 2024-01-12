@@ -9,12 +9,11 @@ export type Rarity =
   | "Utility";
 
 export interface ICard {
+  count: number;
   id: string;
   tag: string;
   name: string;
   rarity: Rarity;
-  image: string;
+  img: string;
   wave: string;
-  shopEligibility: number;
-  count: number;
 }
