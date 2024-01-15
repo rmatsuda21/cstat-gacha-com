@@ -12,22 +12,25 @@ const Leaderboard = ({ leaderboard }: LeaderboardProps) => {
 
   return (
     <table className={styles.wrapper}>
-      <tr>
-        <th>Rank</th>
-        <th>Discord Tag</th>
-        <th>Count</th>
-      </tr>
-
-      {leaderboard?.map((user, indx) => (
-        <tr
-          className={indx === 0 ? styles.first : ""}
-          onClick={() => navigate(`/user/${user.discord_id}`)}
-        >
-          <td>{indx + 1}</td>
-          <td>{user.discord_tag}</td>
-          <td>{user.count}</td>
+      <tbody>
+        <tr>
+          <th>Rank</th>
+          <th>Discord Tag</th>
+          <th>Count</th>
         </tr>
-      ))}
+
+        {leaderboard?.map((user, indx) => (
+          <tr
+            key={user.discord_id}
+            className={indx === 0 ? styles.first : ""}
+            onClick={() => navigate(`/user/${user.discord_id}`)}
+          >
+            <td>{indx + 1}</td>
+            <td>{user.discord_tag}</td>
+            <td>{user.count}</td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 };

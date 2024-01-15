@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 import { query } from "./_utility.js";
+import axios from "axios";
 
 export default async function handler(
   request: VercelRequest,
@@ -13,6 +14,12 @@ export default async function handler(
     response.status(400).json({ error: "No ID provided" });
     return;
   }
+
+  const getUserPromise = axios.get(`https://discord.com/api/v9/users/${id}`, {
+    headers: {
+      Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+    },
+  });
 
   let sql = `
     SELECT ID as id, Tag as tag, Name as name, Rarity as rarity, Image as img, Wave as wave, COUNT(*) as count FROM cards
@@ -37,7 +44,7 @@ export default async function handler(
   const sortKey = sort as keyof typeof sortOptions;
   sql += sortOptions[sortKey] || `ORDER BY count DESC;`;
 
-  const res = await query(sql);
+  const [res, user] = await Promise.all([query(sql), getUserPromise]);
 
-  response.status(200).json({ res });
+  response.status(200).json({ res, user: user.data });
 }

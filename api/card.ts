@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { query } from "./_utility.js";
+import { RowDataPacket } from "mysql2";
 
 export default async function handler(
   request: VercelRequest,
@@ -37,10 +38,9 @@ export default async function handler(
     GROUP BY cards.discord_id, users.discord_tag ORDER BY COUNT(*) desc;
   `;
 
-  const [data, leaderboard] = await Promise.all([
-    query(sql),
-    query(leaderboardSql),
-  ]);
+  const res = await query([sql, leaderboardSql]);
+  const data = (res as RowDataPacket[][])[0][0];
+  const leaderboard = (res as RowDataPacket[][])[1];
 
   response.status(200).json({ data, leaderboard });
 }

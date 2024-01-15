@@ -7,6 +7,7 @@ import {
   faArrowUp,
   faGripVertical,
   faHashtag,
+  faSpinner,
   faSquare,
   faStar,
   faTableList,
@@ -14,8 +15,10 @@ import {
 import { useEffect, useState } from "react";
 import CardTable from "@/components/collection/CardTable";
 import { ICard } from "@/types/Card";
+import { useParams } from "react-router-dom";
 
 const CollectionPage = () => {
+  const [user, setUser] = useState(null);
   const [cards, setCards] = useState<ICard[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [rowNum, setRowNum] = useState(
@@ -25,17 +28,19 @@ const CollectionPage = () => {
     window?.sessionStorage.getItem("sort") || "id-asc"
   ); // ["id-asc", "id-desc", "rarity-asc", "rarity-desc", "count-asc", "count-desc"
 
+  const params = useParams();
+
   useEffect(() => {
     const fetchTest = async () => {
       setIsFetching(true);
-      const res = await fetch(
-        `/api/collection?id=275111230446764032&sort=${sort}`
-      );
+      const res = await fetch(`/api/collection?id=${params.id}&sort=${sort}`);
       const data = await res.json();
 
       const _cards = data?.res as ICard[];
+      const _user = data?.user;
 
       setCards(_cards);
+      setUser(_user);
       setIsFetching(false);
     };
 
@@ -60,10 +65,19 @@ const CollectionPage = () => {
     }
   };
 
+  if (!user || !cards) {
+    return (
+      <div className={styles.loading}>
+        <FontAwesomeIcon icon={faSpinner} />
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
       <h2>
-        Your <br />
+        {user?.global_name}'s <br />
         Collection
       </h2>
       <div className={styles.filter}>

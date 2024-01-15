@@ -17,3 +17,5 @@ export interface ICard {
   img: string;
   wave: string;
 }
+
+export type CardCountType = { rarity: Rarity; count: number };

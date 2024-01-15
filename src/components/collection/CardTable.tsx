@@ -15,30 +15,32 @@ const CardTable = ({ cards, isFetching = false }: CardTableProps) => {
     return (
       <div className={`${styles.wrapper} ${styles.fetching}`}>
         <table>
-          <tr>
-            <th>ID</th>
-            <th>Rarity</th>
-            <th>Name</th>
-            <th>Count</th>
-          </tr>
-          {Array(20)
-            .fill(0)
-            .map(() => (
-              <tr>
-                <td>
-                  <div />
-                </td>
-                <td>
-                  <div />
-                </td>
-                <td>
-                  <div />
-                </td>
-                <td>
-                  <div />
-                </td>
-              </tr>
-            ))}
+          <tbody>
+            <tr>
+              <th>ID</th>
+              <th>Rarity</th>
+              <th>Name</th>
+              <th>Count</th>
+            </tr>
+            {Array(20)
+              .fill(0)
+              .map((_, indx) => (
+                <tr key={indx}>
+                  <td>
+                    <div />
+                  </td>
+                  <td>
+                    <div />
+                  </td>
+                  <td>
+                    <div />
+                  </td>
+                  <td>
+                    <div />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
         </table>
       </div>
     );
@@ -46,20 +48,22 @@ const CardTable = ({ cards, isFetching = false }: CardTableProps) => {
   return (
     <div className={styles.wrapper}>
       <table>
-        <tr>
-          <th>ID</th>
-          <th>Rarity</th>
-          <th>Name</th>
-          <th>Count</th>
-        </tr>
-        {cards.map((card) => (
-          <tr onClick={() => navigate(`/card/${card.tag}`)}>
-            <td>{card.id}</td>
-            <td>{card.rarity}</td>
-            <td>{card.name}</td>
-            <td>{card.count}</td>
+        <tbody>
+          <tr>
+            <th>ID</th>
+            <th>Rarity</th>
+            <th>Name</th>
+            <th>Count</th>
           </tr>
-        ))}
+          {cards.map((card) => (
+            <tr key={card.tag} onClick={() => navigate(`/card/${card.tag}`)}>
+              <td>{card.id}</td>
+              <td>{card.rarity}</td>
+              <td>{card.name}</td>
+              <td>{card.count}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

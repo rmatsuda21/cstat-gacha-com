@@ -4,6 +4,7 @@ import ErrorPage from "./pages/error";
 import Home from "./pages/home";
 
 import "./App.scss";
+
 import CollectionPage from "./pages/collection";
 import CardPage from "./pages/card";
 import UserPage from "./pages/user";
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "collection",
+        path: "collection/:id",
         loader: () => ({ message: "Hello Data Router!" }),
         errorElement: <ErrorPage />,
         element: <CollectionPage />,

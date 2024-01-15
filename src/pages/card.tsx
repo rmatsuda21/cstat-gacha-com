@@ -27,7 +27,7 @@ const CardPage = () => {
 
         console.log(data);
 
-        const _card = data?.data[0] as ICard;
+        const _card = data?.data as ICard;
         const _leaderboard = data?.leaderboard as ILeaderboardUser[];
 
         setCard(_card);

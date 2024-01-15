@@ -27,6 +27,32 @@
   z-index: 2;
 }
 
+.loader,
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  color: var(--text);
+  font-size: 2rem;
+}
+
+.loader {
+  animation: infinite 2s linear spinner;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
 .expanded {
   font-size: 0.7rem;
   text-align: center;
@@ -65,4 +91,16 @@
   width: 100%;
 
   background-color: var(--accent);
+
+  animation: progress 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+}
+
+@keyframes progress {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 100%;
+  }
 }
