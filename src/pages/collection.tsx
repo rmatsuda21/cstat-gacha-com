@@ -18,7 +18,8 @@ import { ICard } from "@/types/Card";
 import { useParams } from "react-router-dom";
 
 const CollectionPage = () => {
-  const [user, setUser] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [user, setUser] = useState<any>(null);
   const [cards, setCards] = useState<ICard[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [rowNum, setRowNum] = useState(
