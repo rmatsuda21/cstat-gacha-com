@@ -7,37 +7,12 @@
   box-sizing: border-box;
 
   overflow-y: scroll;
-  overflow-x: hidden;
-
-  --scrollWidth: 100%;
 
   h2 {
-    span {
-      width: max-content;
-      text-wrap: none;
-    }
     text-transform: uppercase;
     font-size: 2.25rem;
     font-weight: 700;
     margin: 2rem;
-  }
-
-  span {
-    display: inline-block;
-  }
-
-  .animate {
-    animation: infinite 7s linear scroll;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(var(--scrollWidth));
-    }
   }
 }
 

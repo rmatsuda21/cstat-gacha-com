@@ -8,6 +8,7 @@ import Leaderboard from "@/components/card/Leaderboard";
 import { ILeaderboardUser } from "@/types/Leaderboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRankingStar } from "@fortawesome/free-solid-svg-icons";
+import ScrollingText from "@/components/shared/ScrollingText";
 
 const CardPage = () => {
   const [fetching, setFetching] = useState(true);
@@ -24,8 +25,6 @@ const CardPage = () => {
       try {
         const res = await fetch(`/api/card?tag=${params?.tag}`);
         const data = await res.json();
-
-        console.log(data);
 
         const _card = data?.data as ICard;
         const _leaderboard = data?.leaderboard as ILeaderboardUser[];
@@ -84,7 +83,7 @@ const CardPage = () => {
         <span>#{card.id}</span>
         <span>Wave {card.wave}</span>
       </div>
-      <h1>{card.name}</h1>
+      <ScrollingText as={"h1"}>{card.name}</ScrollingText>
       <div className={styles.header}>
         <h5 className={styles.rarity} style={{ color: rarityColor() }}>
           {card.rarity}

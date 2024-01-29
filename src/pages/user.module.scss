@@ -45,6 +45,8 @@
 }
 
 .info {
+  flex: 1;
+
   .rank {
     font-size: 0.75rem;
     font-weight: 900;
@@ -57,6 +59,7 @@
     font-size: 1.75rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    width: 100%;
   }
 
   .username {
@@ -91,51 +94,4 @@
 
   height: 100%;
   width: 100%;
-}
-
-.totalCount {
-  --totalCountPercent: 0%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-
-  margin: 0 auto;
-  width: 100%;
-  height: 30px;
-
-  background-color: rgba(255, 255, 255, 0.1);
-
-  span {
-    position: relative;
-    z-index: 3;
-
-    font-size: 1.25rem;
-    font-weight: bold;
-
-    margin-left: 1rem;
-  }
-}
-
-.totalCount::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  background-color: var(--accent);
-
-  animation: fill 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
-  max-width: var(--totalCountPercent);
-  height: 100%;
-}
-
-@keyframes fill {
-  0% {
-    width: 0%;
-  }
-
-  100% {
-    width: var(--totalCountPercent);
-  }
 }

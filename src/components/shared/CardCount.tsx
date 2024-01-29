@@ -1,10 +1,11 @@
 import { useState } from "react";
-import styles from "./CardCount.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationTriangle,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+
+import styles from "./CardCount.module.scss";
 
 interface CardCountProps {
   isLoading?: boolean;

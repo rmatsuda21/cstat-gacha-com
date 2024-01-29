@@ -1,7 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import axios from "axios";
 
 import { query } from "./_utility.js";
-import axios from "axios";
+import { collectionSql } from "./_sql.js";
 
 export default async function handler(
   request: VercelRequest,
@@ -21,30 +22,10 @@ export default async function handler(
     },
   });
 
-  let sql = `
-    SELECT ID as id, Tag as tag, Name as name, Rarity as rarity, Image as img, Wave as wave, COUNT(*) as count FROM cards
-    INNER JOIN card_data ON cards.card_tag = card_data.Tag
-    WHERE discord_id = ${id}
-    GROUP BY ID, Tag, Name, Rarity, Image, Wave
-  `;
-
-  const sortOptions = {
-    "id-asc": `ORDER BY cast(id as unsigned) ASC;`,
-    "id-desc": `ORDER BY cast(id as unsigned) DESC;`,
-    "name-asc": `ORDER BY name ASC;`,
-    "name-desc": `ORDER BY name DESC;`,
-    "wave-asc": `ORDER BY wave ASC;`,
-    "wave-desc": `ORDER BY wave DESC;`,
-    "rarity-asc": `ORDER BY rarity ASC;`,
-    "rarity-desc": `ORDER BY rarity DESC;`,
-    "count-asc": `ORDER BY count ASC;`,
-    "count-desc": `ORDER BY count DESC;`,
-  };
-
-  const sortKey = sort as keyof typeof sortOptions;
-  sql += sortOptions[sortKey] || `ORDER BY count DESC;`;
-
-  const [res, user] = await Promise.all([query(sql), getUserPromise]);
+  const [res, user] = await Promise.all([
+    query(collectionSql(id as string, sort as string)),
+    getUserPromise,
+  ]);
 
   response.status(200).json({ res, user: user.data });
 }

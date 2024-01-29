@@ -13,10 +13,12 @@ const CardGrid = ({
   cards,
   rowNum = 2,
   isFetching = false,
+  showId = false,
 }: {
   cards: ICard[];
   rowNum: number;
   isFetching?: boolean;
+  showId?: boolean;
 }) => {
   return (
     <div
@@ -26,7 +28,9 @@ const CardGrid = ({
       {isFetching ? (
         <Loader />
       ) : (
-        cards.map((card) => <Card key={card.tag} card={card} />)
+        cards.map((card, indx) => (
+          <Card key={`${card.tag}-${indx}`} card={card} showId={showId} />
+        ))
       )}
     </div>
   );

@@ -1,0 +1,13 @@
+.animate {
+  animation: infinite 7s linear scroll;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(var(--scrollWidth));
+  }
+}

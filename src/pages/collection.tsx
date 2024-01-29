@@ -1,21 +1,16 @@
-import CardGrid from "@/components/collection/CardGrid";
+import { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
 import styles from "./collection.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowDown,
-  faArrowUp,
-  faGripVertical,
-  faHashtag,
-  faSpinner,
-  faSquare,
-  faStar,
-  faTableList,
-} from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import CardTable from "@/components/collection/CardTable";
+
 import { ICard } from "@/types/Card";
-import { useParams } from "react-router-dom";
+import CardGrid from "@/components/collection/CardGrid";
+import CardTable from "@/components/collection/CardTable";
+import Filter from "@/components/collection/Filter";
+import ScrollingText from "@/components/shared/ScrollingText";
 
 const CollectionPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,6 +25,7 @@ const CollectionPage = () => {
   ); // ["id-asc", "id-desc", "rarity-asc", "rarity-desc", "count-asc", "count-desc"
 
   const params = useParams();
+  const headerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const fetchTest = async () => {
@@ -66,6 +62,28 @@ const CollectionPage = () => {
     }
   };
 
+  useEffect(() => {
+    // If header's width is larger than the screen,
+    // Add a scrolling animation to the header
+    if (headerRef.current) {
+      const headerWidth = headerRef.current.getBoundingClientRect().width;
+      const parentWidth =
+        headerRef.current.parentElement?.getBoundingClientRect().width || 0;
+
+      console.log(headerWidth, parentWidth);
+
+      if (headerWidth > parentWidth) {
+        headerRef.current.style.setProperty(
+          "--scrollWidth",
+          `-${headerWidth - parentWidth}px`
+        );
+        headerRef.current.classList.add(styles.animate);
+      } else {
+        headerRef.current.classList.remove(styles.animate);
+      }
+    }
+  }, [headerRef.current]);
+
   if (!user || !cards) {
     return (
       <div className={styles.loading}>
@@ -75,112 +93,38 @@ const CollectionPage = () => {
     );
   }
 
+  if (!isFetching && cards.length === 0) {
+    return (
+      <div className={styles.wrapper}>
+        <h2>
+          {user?.global_name || user?.username}'s <br />
+          Collection
+        </h2>
+        <div className={styles.noCards}>
+          <p>No cards?</p>
+          <p>Go get some in our discord!</p>
+          <Link to="https://discord.gg/TH3MmvTu67">
+            <FontAwesomeIcon icon={faDiscord} />
+            Join Discord
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
       <h2>
-        {user?.global_name}'s <br />
+        <ScrollingText>{user?.global_name || user?.username}'s</ScrollingText>
+        <br />
         Collection
       </h2>
-      <div className={styles.filter}>
-        <div className={`${styles.sort} hidescrollbar`}>
-          <label>
-            <input
-              checked={sort === "id-asc"}
-              onChange={handleSortChange}
-              type="radio"
-              id="id-asc"
-              name="sort-by"
-            />
-            <FontAwesomeIcon icon={faArrowUp} /> ID
-          </label>
-          <label>
-            <input
-              checked={sort === "id-desc"}
-              onChange={handleSortChange}
-              type="radio"
-              id="id-desc"
-              name="sort-by"
-            />
-            <FontAwesomeIcon icon={faArrowDown} /> ID
-          </label>
-          <label>
-            <input
-              checked={sort === "rarity-asc"}
-              onChange={handleSortChange}
-              type="radio"
-              id="rarity-asc"
-              name="sort-by"
-            />
-            <FontAwesomeIcon icon={faArrowUp} />
-            <FontAwesomeIcon icon={faStar} />
-          </label>
-          <label>
-            <input
-              checked={sort === "rarity-desc"}
-              onChange={handleSortChange}
-              type="radio"
-              id="rarity-desc"
-              name="sort-by"
-            />
-            <FontAwesomeIcon icon={faArrowDown} />
-            <FontAwesomeIcon icon={faStar} />
-          </label>
-          <label>
-            <input
-              checked={sort === "count-asc"}
-              onChange={handleSortChange}
-              type="radio"
-              id="count-asc"
-              name="sort-by"
-            />
-            <FontAwesomeIcon icon={faArrowUp} />
-            <FontAwesomeIcon icon={faHashtag} />
-          </label>
-          <label>
-            <input
-              checked={sort === "count-desc"}
-              onChange={handleSortChange}
-              type="radio"
-              id="count-desc"
-              name="sort-by"
-            />
-            <FontAwesomeIcon icon={faArrowDown} />
-            <FontAwesomeIcon icon={faHashtag} />
-          </label>
-        </div>
-        <div className={styles.row}>
-          <label>
-            <input
-              checked={rowNum === 1}
-              onChange={handleRowChange}
-              type="radio"
-              id="singleRow"
-              name="row-count"
-            />
-            <FontAwesomeIcon icon={faSquare} />
-          </label>
-          <label>
-            <input
-              checked={rowNum === 2}
-              onChange={handleRowChange}
-              type="radio"
-              id="multiRow"
-              name="row-count"
-            />
-            <FontAwesomeIcon icon={faGripVertical} />
-          </label>
-          <label>
-            <input
-              checked={rowNum === -1}
-              onChange={handleRowChange}
-              type="radio"
-              id="table"
-              name="row-count"
-            />
-            <FontAwesomeIcon icon={faTableList} />
-          </label>
-        </div>
-      </div>
+      <Filter
+        sort={sort}
+        rowNum={rowNum}
+        handleSortChange={handleSortChange}
+        handleRowChange={handleRowChange}
+      />
       {rowNum > 0 ? (
         <CardGrid isFetching={isFetching} cards={cards} rowNum={rowNum} />
       ) : (

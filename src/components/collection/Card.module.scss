@@ -30,6 +30,20 @@
   font-size: 0.8rem;
 }
 
+.id {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: -10px 0 0 0;
+
+  background-color: var(--accent);
+  border-radius: 5px;
+
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.5rem;
+}
+
 .activity {
   background-color: #3a3a3a;
   width: 100%;
@@ -54,4 +68,17 @@
     filter: brightness(1);
     -webkit-filter: brightness(1);
   }
+}
+
+.missing {
+  background-color: #3a3a3a;
+  width: 100%;
+  aspect-ratio: 155 / 228.77;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  font-weight: 800;
 }

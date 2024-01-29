@@ -13,11 +13,11 @@ import styles from "./user.module.scss";
 import { ILeaderboard, IUser } from "@/types/User";
 import CardCountDisplay from "@/components/shared/CardCountDisplay";
 import MenuItem from "@/components/home/mobile/MenuItem";
+import ScrollingText from "@/components/shared/ScrollingText";
 
 const UserPage = () => {
   const [user, setUser] = useState<IUser | { error: boolean } | null>(null);
   const [leaderboard, setLeaderboard] = useState<ILeaderboard[] | null>(null);
-  const [globalCardCount, setGlobalCardCount] = useState<number>(0);
   const params = useParams();
 
   useEffect(() => {
@@ -28,7 +28,6 @@ const UserPage = () => {
 
         setUser(data.user);
         setLeaderboard(data.leaderboard);
-        setGlobalCardCount(data.globalCardCount[0].count);
       } catch (err) {
         setUser({ error: true });
       }
@@ -72,29 +71,20 @@ const UserPage = () => {
     });
   };
 
-  const totalCountStyle = {
-    "--totalCountPercent": `${
-      ((rank?.totalCount || 0) / globalCardCount) * 100
-    }%`,
-  } as React.CSSProperties;
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <img src={userImage} alt="avatar" />
         <div className={styles.info} onClick={handleUserNameClick}>
           {rank && <p className={styles.rank}>Rank #{rank?.rank}</p>}
-          <p className={styles.name}>{user.global_name}</p>
+          <ScrollingText as="p" className={styles.name}>
+            {user.global_name || user.username}
+          </ScrollingText>
           <p className={styles.username}>{user.username}</p>
         </div>
       </div>
       <div className={styles.cardCountWrapper}>
         <CardCountDisplay id={params.id} className={styles.cardCount} />
-        <div className={styles.totalCount} style={totalCountStyle}>
-          <span>
-            {rank?.totalCount} / {globalCardCount}
-          </span>
-        </div>
       </div>
       <MenuItem
         to={`/collection/${params.id}`}
