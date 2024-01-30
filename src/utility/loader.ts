@@ -33,9 +33,6 @@ export const discordRedirectLoader = async () => {
 
   const user = userFetch.data;
 
-  // TODO: Remove this line, it's just for testing
-  user.id = "229280774233260033";
-
   setUser(user);
   setDiscordAuth({
     token,
