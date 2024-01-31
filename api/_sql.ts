@@ -75,6 +75,15 @@ const leaderboardSql = () => `
     ORDER BY total.count desc, discord_tag;
   `;
 
+const offersSql = () => `
+    SELECT t.offer_discord_id as id, users.discord_tag as tag, t.status, t.offer_quantity, t.accept_quantity, cd.Name as offer_name, cd1.Name as accept_name, cd.Image as offer_img, cd1.Image as accept_img
+    FROM trades t 
+    JOIN card_data cd on cd.Tag = t.offer_card 
+    JOIN card_data cd1 on cd1.Tag = t.accept_card
+    JOIN users on users.discord_id = t.offer_discord_id
+    WHERE t.status = 'Active'
+  `;
+
 export {
   globalCardCountSql,
   leaderboardSql,
@@ -84,4 +93,5 @@ export {
   collectionSql,
   userCardCountSql,
   globalRarityCardCountSql,
+  offersSql,
 };

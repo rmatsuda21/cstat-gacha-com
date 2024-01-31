@@ -4,6 +4,7 @@ import {
   authLoader,
   discordRedirectLoader,
   leaderboardLoader,
+  offersLoader,
 } from "@/utility/loader";
 import multiLoader from "@/utility/multiLoader";
 
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       {
         path: "offers",
         element: <OffersPage />,
+        loader: offersLoader,
       },
       {
         path: "card/:tag",

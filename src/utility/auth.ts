@@ -7,8 +7,6 @@ export const getDiscordAuth = () => {
   if (!auth || !user) return null;
 
   const { expirationDate } = JSON.parse(auth);
-
-  // Check expiration
   const currentDate = new Date();
   const isExpired = currentDate > new Date(expirationDate);
 

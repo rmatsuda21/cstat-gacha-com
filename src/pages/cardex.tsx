@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./collection.module.scss";
 
@@ -61,7 +61,9 @@ const CardexPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h2>Cardex</h2>
+      <h2>
+        <FontAwesomeIcon icon={faBook} /> Cardex
+      </h2>
       <Filter rowNum={rowNum} handleRowChange={handleRowChange} />
       {rowNum > 0 ? (
         <CardGrid

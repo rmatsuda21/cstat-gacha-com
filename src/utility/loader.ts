@@ -49,3 +49,10 @@ export const leaderboardLoader = async () => {
 
   return leaderboard;
 };
+
+export const offersLoader = async () => {
+  const offersFetch = await fetch("/api/offers");
+  const offers = await offersFetch.json();
+
+  return offers;
+};

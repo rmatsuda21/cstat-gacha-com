@@ -6,7 +6,7 @@ import {
   faVault,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 
 import styles from "./Mobile.module.scss";
 
@@ -28,21 +28,32 @@ const discordAuthUrl = () => {
 };
 
 const Leaderboard = ({ leaderboard }: { leaderboard: ILeaderboard[] }) => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.leaderboard}>
       <h2>Collection Leaderboard</h2>
       <div className={styles.placement}>
-        <div className={styles.first}>
+        <div
+          className={styles.first}
+          onClick={() => navigate(`/user/${leaderboard[0].discord_id}`)}
+        >
           <FontAwesomeIcon icon={faCrown} />
           <h2>{leaderboard[0].discord_tag}</h2>
           <span>{leaderboard[0].totalCount}</span>
         </div>
-        <div className={styles.second}>
+        <div
+          className={styles.second}
+          onClick={() => navigate(`/user/${leaderboard[1].discord_id}`)}
+        >
           <h1>2</h1>
           <h2>{leaderboard[1].discord_tag}</h2>
           <span>{leaderboard[1].totalCount}</span>
         </div>
-        <div className={styles.third}>
+        <div
+          className={styles.third}
+          onClick={() => navigate(`/user/${leaderboard[2].discord_id}`)}
+        >
           <h1>3</h1>
           <h2>{leaderboard[2].discord_tag}</h2>
           <span>{leaderboard[2].totalCount}</span>
